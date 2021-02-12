@@ -43,9 +43,9 @@ digraph {
     mic -> pc_windows [headlabel="USB", taillabel="USB", color=blue];
     cam -> pc_windows [headlabel="USB", taillabel="USB", color=blue];
 
-    pc_windows -> monitor_4k [headlabel="HDMI", taillabel="HDMI", color=purple];
+    pc_windows -> monitor_4k [headlabel="DP", taillabel="DP", color=purple];
     pc_windows -> monitor_iiyama [headlabel="HDMI", taillabel="HDMI", color=purple];
-    pc_mbp -> monitor_4k [headlabel="HDMI", taillabel="HDMI", color=purple];
+    pc_mbp -> monitor_4k [headlabel="HDMI", taillabel="USB", color=purple];
     pc_windows -> astro_mixamp [dir="both", headlabel="USB", taillabel="USB", color=blue]
     
     astro_mixamp -> headset [dir="both", headlabel="AUX", taillabel="AUX", color=red];
