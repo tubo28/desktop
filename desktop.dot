@@ -7,8 +7,12 @@ digraph {
     capture_board [color="gray", label="キャプチャーボード\n(AVerMedia AVT-C878)", shape="box", style="filled"];
     astro_mixamp [color="gray", label="オーディオMixAmp\n(Astro MixAmp TR)", shape="box", style="filled"];
 
+    audio_switcher [color="gray", label="オーディオスイッチ\n(サンワサプライ MM-SW3N)", shape="box", style="filled"]
+    active_speaker [color="gray", label="アクティブスピーカー\n(Amazon Basics)", shape="box", style="filled"]
+    headset [color="gray", label="ヘッドセット\n(Astro A40 TR)", shape="box", style="filled"];
+
     nintendo_switch [color="gray", label="Nintendo Switch", shape="box", style="filled"];
-    { rank=min; nintendo_switch }
+    # { rank=min; nintendo_switch }
 
     subgraph cluster_pcs {
         label="PC"
@@ -18,9 +22,8 @@ digraph {
 
     subgraph cluster_io {
         label="手元"
-        headset [color="gray", label="ヘッドセット\n(Astro A40 TR)", shape="box", style="filled"];
-        keyboard [color="gray", label="キーボード", shape="box", style="filled"];
-        mouse [color="gray", label="マウス", shape="box", style="filled"];
+        keyboard [color="gray", label="キーボード\n(ARCHISS AS-KBQ89/TGB)", shape="box", style="filled"];
+        mouse [color="gray", label="マウス\n(Logicool G703h)", shape="box", style="filled"];
         switch_controller [color="gray", label="Switch プロコン", shape="box", style="filled"];
         mic [color="gray", label="マイク\n(Marantz Pro M4U)", shape="box", style="filled"];
         cam [color="gray", label="Webカメラ\n(Logicool C270)", shape="box", style="filled"];
@@ -30,7 +33,6 @@ digraph {
         label="モニター";
         monitor_4k [color="gray", label="4Kモニター\n(LG 32UD59-B)", shape="box", style="filled"];
         monitor_gigacrysta [color="gray", label="FHDゲーミングモニター\n(I-O DATA GigaCrysta EX-LDGC251TB)", shape="box", style="filled"];
-        monitor_iiyama [color="gray", label="FHDモニター\n(iiyama ProLite E2278HD)", shape="box", style="filled"];
     }
 
     nintendo_switch -> hdmi_splitter [headlabel="HDMI", taillabel="HDMI", color=purple];
@@ -38,17 +40,18 @@ digraph {
     hdmi_splitter -> capture_board [headlabel="HDMI", taillabel="HDMI", color=purple];
     capture_board -> pc_windows [headlabel="USB", taillabel="USB", color=blue];
 
-    mouse -> pc_windows [taillabel="USB", label="独自無線", style="dashed", color=blue];
-    keyboard -> pc_windows [taillabel="USB", label="Bluetooth", style="dashed", color=blue];
-    mic -> pc_windows [headlabel="USB", taillabel="USB", color=blue];
+    mouse -> pc_windows [headlabel="USB", label="2.4 GHz", style="dashed", color=blue];
+    keyboard -> pc_windows [taillabel="USB", color=blue];
+    mic -> pc_windows [headlabel="USB", taillabel="AUX", color=blue];
     cam -> pc_windows [headlabel="USB", taillabel="USB", color=blue];
 
     pc_windows -> monitor_4k [headlabel="DP", taillabel="DP", color=purple];
-    pc_windows -> monitor_iiyama [headlabel="HDMI", taillabel="HDMI", color=purple];
-    pc_mbp -> monitor_4k [headlabel="HDMI", taillabel="USB", color=purple];
+    pc_mbp -> monitor_4k [headlabel="HDMI", taillabel="USB (Type-C)", color=purple];
     pc_windows -> astro_mixamp [dir="both", headlabel="USB", taillabel="USB", color=blue]
     
-    astro_mixamp -> headset [dir="both", headlabel="AUX", taillabel="AUX", color=red];
+    astro_mixamp -> audio_switcher [headlabel="AUX", taillabel="AUX", color=red];
+    audio_switcher -> headset [headlabel="AUX", taillabel="AUX", color=red];
+    audio_switcher -> active_speaker [headlabel="AUX", taillabel="AUX", color=red];
 
     switch_controller -> nintendo_switch [label="Bluetooth?", style="dashed", color=blue];
     capture_board -> astro_mixamp [headlabel="AUX", taillabel="AUX", color=red];
