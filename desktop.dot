@@ -1,39 +1,52 @@
 digraph {
+    newrank=true
+    
     graph [fontname="mplus-1p-light"];
-    node [fontname="mplus-1p-light", margin=0.2];
+    node [fontname="mplus-1p-light", margin=0.2, color="gray", shape="box", style="filled"];
     edge [fontname="mplus-1p-light", fontsize=10];
 
-    hdmi_splitter [color="gray", label="HDMIスプリッター\n(AstroAI 759974997778)", shape="box", style="filled"];
-    capture_board [color="gray", label="キャプチャーボード\n(AVerMedia AVT-C878)", shape="box", style="filled"];
-    astro_mixamp [color="gray", label="オーディオMixAmp\n(Astro MixAmp TR)", shape="box", style="filled"];
-
-    audio_switcher [color="gray", label="オーディオスイッチ\n(サンワサプライ MM-SW3N)", shape="box", style="filled"]
-    active_speaker [color="gray", label="アクティブスピーカー\n(Amazon Basics)", shape="box", style="filled"]
-    headset [color="gray", label="ヘッドセット\n(Astro A40 TR)", shape="box", style="filled"];
-
-    nintendo_switch [color="gray", label="Nintendo Switch", shape="box", style="filled"];
-    # { rank=min; nintendo_switch }
-
     subgraph cluster_pcs {
-        label="PC"
-        pc_windows [color="gray", label="デスクトップPC\n(Windows)", shape="box", style="filled"];
-        pc_mbp [color="gray", label="社用ノートPC\n(MacBook Pro)", shape="box", style="filled"];
+        label="PC・ゲーム"
+        rank=same;
+        pc_windows [label="デスクトップPC\nWindows"];
+        pc_mbp [label="社用ノートPC\nMacBook Pro"];
+        nintendo_switch [label="Nintendo Switch"];
     }
 
-    subgraph cluster_io {
-        label="手元"
-        keyboard [color="gray", label="キーボード\n(ARCHISS AS-KBQ89/TGB)", shape="box", style="filled"];
-        mouse [color="gray", label="マウス\n(Logicool G703h)", shape="box", style="filled"];
-        switch_controller [color="gray", label="Switch プロコン", shape="box", style="filled"];
-        mic [color="gray", label="マイク\n(Marantz Pro M4U)", shape="box", style="filled"];
-        cam [color="gray", label="Webカメラ\n(Logicool C270)", shape="box", style="filled"];
+    subgraph cluster_input {
+        label="入力デバイス"
+        rank=same;
+        keyboard [label="キーボード\nARCHISS AS-KBQ89/TGB"];
+        mouse [label="マウス\nLogicool G703h"];
+        mic [label="マイク\nMarantz Pro M4U"];
+        cam [label="Webカメラ\nLogicool C270"];
+        switch_controller [color="gray", label="Switch プロコン"];
     }
 
-    subgraph cluster_monitors {
-        label="モニター";
-        monitor_4k [color="gray", label="4Kモニター\n(LG 32UD59-B)", shape="box", style="filled"];
-        monitor_gigacrysta [color="gray", label="FHDゲーミングモニター\n(I-O DATA GigaCrysta EX-LDGC251TB)", shape="box", style="filled"];
+    subgraph cluster_mix {
+        label="ミキサー・スプリッター"
+        # rank=same;
+        hdmi_splitter [label="HDMIスプリッター\nAstroAI 759974997778"];
+        capture_board [label="キャプチャーボード\nAVerMedia AVT-C878"];
+        astro_mixamp [label="オーディオMixAmp\nAstro MixAmp TR"];
+        audio_switcher [label="オーディオスイッチ\nサンワサプライ MM-SW3N"]
     }
+
+    subgraph cluster_video_output {
+        label="映像出力デバイス";
+        rank=same;
+        monitor_4k [label="32 inch 4Kモニター\nLG 32UD59-B"];
+        monitor_gigacrysta [label="27 inch FHDゲーミングモニター\nI-O DATA GigaCrysta EX-LDGC251TB"];
+    }
+
+    subgraph cluster_audio_output {
+        label="音声出力デバイス";
+        rank=same;
+        active_speaker [label="アクティブスピーカー\nAmazon Basics"]
+        headset [label="ヘッドセット\nAstro A40 TR"];
+    }
+
+    { rank=same; monitor_4k, monitor_gigacrysta, active_speaker, headset}
 
     nintendo_switch -> hdmi_splitter [headlabel="HDMI", taillabel="HDMI", color=purple];
     hdmi_splitter -> monitor_gigacrysta [headlabel="HDMI", taillabel="HDMI", color=purple];
@@ -41,18 +54,18 @@ digraph {
     capture_board -> pc_windows [headlabel="USB", taillabel="USB", color=blue];
 
     mouse -> pc_windows [headlabel="USB", label="2.4 GHz", style="dashed", color=blue];
-    keyboard -> pc_windows [taillabel="USB", color=blue];
+    keyboard -> pc_windows [headlabel="USB", color=blue];
     mic -> pc_windows [headlabel="USB", taillabel="AUX", color=blue];
-    cam -> pc_windows [headlabel="USB", taillabel="USB", color=blue];
+    cam -> pc_windows [headlabel="USB", color=blue];
+    switch_controller -> nintendo_switch [label="Bluetooth?", style="dashed", color=blue];
 
     pc_windows -> monitor_4k [headlabel="DP", taillabel="DP", color=purple];
     pc_mbp -> monitor_4k [headlabel="HDMI", taillabel="USB (Type-C)", color=purple];
     pc_windows -> astro_mixamp [dir="both", headlabel="USB", taillabel="USB", color=blue]
     
     astro_mixamp -> audio_switcher [headlabel="AUX", taillabel="AUX", color=red];
-    audio_switcher -> headset [headlabel="AUX", taillabel="AUX", color=red];
+    audio_switcher -> headset [headlabel="AUX", taillabel="AUX", color=red, label="無線にしたい！"];
     audio_switcher -> active_speaker [headlabel="AUX", taillabel="AUX", color=red];
 
-    switch_controller -> nintendo_switch [label="Bluetooth?", style="dashed", color=blue];
     capture_board -> astro_mixamp [headlabel="AUX", taillabel="AUX", color=red];
 }
