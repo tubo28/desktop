@@ -1,12 +1,12 @@
 digraph {
-    newrank=true
-    
+    newrank=true;
+
     graph [fontname="mplus-1p-light"];
     node [fontname="mplus-1p-light", margin=0.2, color="gray", shape="box", style="filled"];
     edge [fontname="mplus-1p-light", fontsize=10];
 
     subgraph cluster_pcs {
-        label="PC・ゲーム"
+        label="PC・ゲーム";
         rank=same;
         pc_windows [label="デスクトップPC\nWindows"];
         pc_mbp [label="社用ノートPC\nMacBook Pro"];
@@ -14,7 +14,7 @@ digraph {
     }
 
     subgraph cluster_input {
-        label="入力デバイス"
+        label="入力デバイス";
         rank=same;
         keyboard [label="キーボード\nARCHISS AS-KBQ89/TGB"];
         mouse [label="マウス\nLogicool G703h"];
@@ -24,12 +24,12 @@ digraph {
     }
 
     subgraph cluster_mix {
-        label="ミキサー・スプリッター"
-        # rank=same;
+        label="ミキサー・スプリッター";
+        // rank=same;
         hdmi_splitter [label="HDMIスプリッター\nAstroAI 759974997778"];
         capture_board [label="キャプチャーボード\nAVerMedia AVT-C878"];
         astro_mixamp [label="オーディオMixAmp\nAstro MixAmp TR"];
-        audio_switcher [label="オーディオスイッチ\nサンワサプライ MM-SW3N"]
+        audio_switcher [label="オーディオスイッチ\nサンワサプライ MM-SW3N"];
     }
 
     subgraph cluster_video_output {
@@ -42,30 +42,30 @@ digraph {
     subgraph cluster_audio_output {
         label="音声出力デバイス";
         rank=same;
-        active_speaker [label="アクティブスピーカー\nAmazon Basics"]
+        active_speaker [label="アクティブスピーカー\nAmazon Basics"];
         headset [label="ヘッドセット\nAstro A40 TR"];
     }
 
-    { rank=same; monitor_4k, monitor_gigacrysta, active_speaker, headset}
+    { rank=same; monitor_4k, monitor_gigacrysta, active_speaker, headset }
 
-    nintendo_switch -> hdmi_splitter [headlabel="HDMI", taillabel="HDMI", color=purple];
-    hdmi_splitter -> monitor_gigacrysta [headlabel="HDMI", taillabel="HDMI", color=purple];
-    hdmi_splitter -> capture_board [headlabel="HDMI", taillabel="HDMI", color=purple];
-    capture_board -> pc_windows [headlabel="USB", taillabel="USB", color=blue];
+    nintendo_switch   -> hdmi_splitter      [color=purple, taillabel="HDMI", headlabel="HDMI"];
+    hdmi_splitter     -> monitor_gigacrysta [color=purple, taillabel="HDMI", headlabel="HDMI"];
+    hdmi_splitter     -> capture_board      [color=purple, taillabel="HDMI", headlabel="HDMI"];
+    capture_board     -> pc_windows         [color=blue, taillabel="USB", headlabel="USB"];
 
-    mouse -> pc_windows [headlabel="USB", label="2.4 GHz", style="dashed", color=blue];
-    keyboard -> pc_windows [headlabel="USB", color=blue];
-    mic -> pc_windows [headlabel="USB", taillabel="AUX", color=blue];
-    cam -> pc_windows [headlabel="USB", color=blue];
-    switch_controller -> nintendo_switch [label="Bluetooth?", style="dashed", color=blue];
+    mouse             -> pc_windows         [color=blue, headlabel="USB", label="2.4 GHz", style="dashed"];
+    keyboard          -> pc_windows         [color=blue, headlabel="USB"];
+    mic               -> pc_windows         [color=blue, taillabel="AUX", headlabel="USB"];
+    cam               -> pc_windows         [color=blue, headlabel="USB"];
+    switch_controller -> nintendo_switch    [color=blue, label="Bluetooth", style="dashed"];
 
-    pc_windows -> monitor_4k [headlabel="DP", taillabel="DP", color=purple];
-    pc_mbp -> monitor_4k [headlabel="HDMI", taillabel="USB (Type-C)", color=purple];
-    pc_windows -> astro_mixamp [dir="both", headlabel="USB", taillabel="USB", color=blue]
-    
-    astro_mixamp -> audio_switcher [headlabel="AUX", taillabel="AUX", color=red];
-    audio_switcher -> headset [headlabel="AUX", taillabel="AUX", color=red, label="無線にしたい！"];
-    audio_switcher -> active_speaker [headlabel="AUX", taillabel="AUX", color=red];
+    pc_windows        -> monitor_4k         [color=purple, taillabel="DP", headlabel="DP"];
+    pc_mbp            -> monitor_4k         [color=purple, taillabel="USB (Type-C)", headlabel="HDMI"];
+    pc_windows        -> astro_mixamp       [color=blue, taillabel="USB", headlabel="USB"]
 
-    capture_board -> astro_mixamp [headlabel="AUX", taillabel="AUX", color=red];
+    astro_mixamp      -> audio_switcher     [color=red, taillabel="AUX", headlabel="AUX"];
+    audio_switcher    -> headset            [color=red, taillabel="AUX", headlabel="AUX", label="無線にしたい！"];
+    audio_switcher    -> active_speaker     [color=red, taillabel="AUX", headlabel="AUX"];
+
+    capture_board     -> astro_mixamp       [color=red, taillabel="AUX", headlabel="AUX"];
 }
