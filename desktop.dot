@@ -28,7 +28,7 @@ digraph {
         // rank=same;
         hdmi_splitter [label="HDMIスプリッター\nAstroAI 759974997778"];
         capture_board [label="キャプチャーボード\nAVerMedia AVT-C878"];
-        astro_mixamp [label="オーディオMixAmp\nAstro MixAmp TR"];
+        webcasting_mixer [label="ウェブキャスティングミキサー\nYAMAHA AG03"];
         audio_switcher [label="オーディオスイッチ\nサンワサプライ MM-SW3N"];
     }
 
@@ -55,17 +55,17 @@ digraph {
 
     mouse             -> pc_windows         [color=blue, headlabel="USB", label="2.4 GHz", style="dashed"];
     keyboard          -> pc_windows         [color=blue, headlabel="USB"];
-    mic               -> pc_windows         [color=blue, taillabel="AUX", headlabel="USB"];
+    mic               -> webcasting_mixer   [color=red, taillabel="AUX", headlabel="AUX"];
     cam               -> pc_windows         [color=blue, headlabel="USB"];
     switch_controller -> nintendo_switch    [color=blue, label="Bluetooth", style="dashed"];
 
     pc_windows        -> monitor_4k         [color=purple, taillabel="DP", headlabel="DP"];
     pc_mbp            -> monitor_4k         [color=purple, taillabel="USB (Type-C)", headlabel="HDMI"];
-    pc_windows        -> astro_mixamp       [color=blue, taillabel="USB", headlabel="USB"]
+    pc_windows        -> webcasting_mixer   [color=blue, taillabel="USB", headlabel="USB"]
 
-    astro_mixamp      -> audio_switcher     [color=red, taillabel="AUX", headlabel="AUX"];
+    webcasting_mixer  -> audio_switcher     [color=red, taillabel="AUX", headlabel="AUX"];
     audio_switcher    -> headset            [color=red, taillabel="AUX", headlabel="AUX", label="無線にしたい！"];
     audio_switcher    -> active_speaker     [color=red, taillabel="AUX", headlabel="AUX"];
 
-    capture_board     -> astro_mixamp       [color=red, taillabel="AUX", headlabel="AUX"];
+    capture_board     -> webcasting_mixer   [color=red, taillabel="AUX", headlabel="AUX"];
 }
