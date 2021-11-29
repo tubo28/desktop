@@ -1,57 +1,37 @@
 digraph {
-    newrank=true;
-
     graph [fontname="mplus-1p-light"];
     node [fontname="mplus-1p-light", margin=0.2, color="gray", shape="box", style="filled"];
     edge [fontname="mplus-1p-light", fontsize=10];
 
     subgraph cluster_pcs {
-        label="PC";
-        rank=same;
+        label="コンピュータ";
         pc_windows [label="デスクトップPC\nWindows"];
         pc_mbp [label="社用ノートPC\nMacBook Pro"];
+        nintendo_switch [label="Nintendo Switch"];
     }
 
     subgraph cluster_input {
-        label="入力デバイス";
-        rank=same;
+        label="PCへの入力";
         keyboard [label="キーボード\nARCHISS AS-KBQ89/TGB"];
+        capture_board [label="キャプチャーボード\nAVerMedia AVT-C878"];
         mouse [label="マウス\nLogicool G703h"];
-        mic [label="マイク\nMarantz Pro M4U"];
         cam [label="Webカメラ\nLogicool C270"];
     }
 
     subgraph cluster_mix {
-        label="ミキサー・スプリッター";
-        rank=same;
+        label="映像";
         hdmi_splitter [label="HDMIスプリッター\nAstroAI 759974997778"];
-        capture_board [label="キャプチャーボード\nAVerMedia AVT-C878"];
-        webcasting_mixer [label="ウェブキャスティングミキサー\nYAMAHA AG03"];
-        audio_switcher [label="オーディオスイッチ\nサンワサプライ MM-SW3N"];
-    }
-
-    subgraph cluster_video_output {
-        label="映像出力デバイス";
-        rank=same;
         monitor_4k [label="32 inch 4Kモニター\nLG 32UD59-B"];
         monitor_gigacrysta [label="27 inch FHDゲーミングモニター\nI-O DATA GigaCrysta EX-LDGC251TB"];
     }
 
-    subgraph cluster_audio_output {
-        label="音声出力デバイス";
-        rank=same;
+    subgraph cluster_audio {
+        label="音声";
         active_speaker [label="アクティブスピーカー\nAmazon Basics"];
         headset [label="ヘッドセット\nAstro A40 TR"];
+        webcasting_mixer [label="ウェブキャスティングミキサー\nYAMAHA AG03"];
+        mic [label="マイク\nMarantz Pro M4U"];
     }
-
-    subgraph cluster_videogame {
-        label="ゲーム";
-        rank=same;
-        nintendo_switch [label="Nintendo Switch"];
-        switch_controller [color="gray", label="Switch プロコン"];
-    }
-
-    { rank=same; monitor_4k, monitor_gigacrysta, active_speaker, headset }
 
     nintendo_switch   -> hdmi_splitter      [color=purple, taillabel="HDMI", headlabel="HDMI"];
     hdmi_splitter     -> monitor_gigacrysta [color=purple, taillabel="HDMI", headlabel="HDMI"];
@@ -60,17 +40,15 @@ digraph {
 
     mouse             -> pc_windows         [color=blue, headlabel="USB", label="2.4 GHz", style="dashed"];
     keyboard          -> pc_windows         [color=blue, headlabel="USB"];
-    mic               -> webcasting_mixer   [color=red, taillabel="AUX", headlabel="AUX"];
+    mic               -> webcasting_mixer   [color=red, taillabel="XLR", headlabel="AUX (φ3.5)"];
     cam               -> pc_windows         [color=blue, headlabel="USB"];
-    switch_controller -> nintendo_switch    [color=blue, label="Bluetooth", style="dashed"];
 
     pc_windows        -> monitor_4k         [color=purple, taillabel="DP", headlabel="DP"];
     pc_mbp            -> monitor_4k         [color=purple, taillabel="USB (Type-C)", headlabel="HDMI"];
     pc_windows        -> webcasting_mixer   [color=blue, taillabel="USB", headlabel="USB (Type-B)"]
 
-    webcasting_mixer  -> audio_switcher     [color=red, taillabel="AUX", headlabel="AUX"];
-    audio_switcher    -> headset            [color=red, taillabel="AUX", headlabel="AUX", label="無線にしたい！"];
-    audio_switcher    -> active_speaker     [color=red, taillabel="AUX", headlabel="AUX"];
+    webcasting_mixer  -> headset            [color=red, taillabel="AUX (φ3.5)", headlabel="AUX (φ3.5)", label="無線にしたい！"];
+    webcasting_mixer  -> active_speaker     [color=red, taillabel="AUX (φ6.35)"];
 
-    capture_board     -> webcasting_mixer   [color=red, taillabel="AUX", headlabel="AUX"];
+    capture_board     -> webcasting_mixer   [color=red, taillabel="AUX (φ3.5)", headlabel="AUX (φ3.5)"];
 }
