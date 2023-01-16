@@ -1,54 +1,67 @@
 digraph {
-    graph [fontname="mplus-1p-light"];
-    node [fontname="mplus-1p-light", margin=0.2, color="gray", shape="box", style="filled"];
-    edge [fontname="mplus-1p-light", fontsize=10];
-
-    subgraph cluster_pcs {
-        label="コンピュータ";
-        pc_windows [label="デスクトップPC\nWindows"];
-        pc_mbp [label="社用ノートPC\nMacBook Pro"];
-        nintendo_switch [label="Nintendo Switch"];
+    graph [fontname = "mplus-1p-light"; rankdir = LR;];
+    node [fontname = "mplus-1p-light"; margin = 0.2; color = "gray"; shape = "box"; style = "filled";];
+    edge [fontname = "mplus-1p-light"; fontsize = 12;];
+    
+    subgraph cluster_desktop {
+        label = "机上";
+        subgraph cluster_temoto {
+            label = "手元";
+            keyboard [label = "キーボード\nARCHISS AS-KBQ89/TGB";];
+            mouse [label = "マウス\nLogicool G703h";];
+            pc_mbp [label = "社用ノートPC\nMacBook Pro";];
+        }
+        headset [label = "ヘッドセット\nAstro A40 TR";];
+        usb_hub [label = "USB ハブ";];
+        mic [label = "マイク\nMarantz Pro M4U";];
+        active_speaker [label = "アクティブスピーカー\nAmazon Basics";];
     }
-
-    subgraph cluster_input {
-        label="PCへの入力";
-        keyboard [label="キーボード\nARCHISS AS-KBQ89/TGB"];
-        capture_board [label="キャプチャーボード\nAVerMedia AVT-C878"];
-        mouse [label="マウス\nLogicool G703h"];
-        cam [label="Webカメラ\nLogicool C270"];
+    
+    subgraph cluster_monitor_arm {
+        label = "モニタアーム";
+        monitor_4k [label = "32 inch 4Kモニター\nLG 32UD59-B";];
+        monitor_gigacrysta [label = "27 inch FHDゲーミングモニター\nI-O DATA GigaCrysta EX-LDGC251TB";];
+        cam [label = "Webカメラ\nLogicool C270";];
     }
-
-    subgraph cluster_mix {
-        label="映像";
-        hdmi_splitter [label="HDMIスプリッター\nAstroAI 759974997778"];
-        monitor_4k [label="32 inch 4Kモニター\nLG 32UD59-B"];
-        monitor_gigacrysta [label="27 inch FHDゲーミングモニター\nI-O DATA GigaCrysta EX-LDGC251TB"];
+    
+    subgraph cluster_rack {
+        label = "メタルラック";
+        subgraph cluster_game {
+            label = "上段";
+            capture_board [label = "キャプチャーボード\nAVerMedia AVT-C878";];
+            nintendo_switch [label = "Nintendo Switch";];
+            hdmi_splitter [label = "HDMIスプリッター\nAstroAI 759974997778";];
+        }
+        
+        subgraph cluster_aaa {
+            label = "下段";
+            pc_windows [label = "デスクトップPC\nWindows";];
+        }
+        
+        subgraph cluster_audio {
+            label = "中段";
+            webcasting_mixer [label = "ウェブキャスティングミキサー\nYamaha AG06Mk2 (Input Mix Mode)";];
+        }
     }
-
-    subgraph cluster_audio {
-        label="音声";
-        active_speaker [label="アクティブスピーカー\nAmazon Basics"];
-        headset [label="ヘッドセット\nAstro A40 TR"];
-        webcasting_mixer [label="ウェブキャスティングミキサー\nYAMAHA AG03"];
-        mic [label="マイク\nMarantz Pro M4U"];
-    }
-
-    nintendo_switch   -> hdmi_splitter      [color=purple, taillabel="HDMI", headlabel="HDMI"];
-    hdmi_splitter     -> monitor_gigacrysta [color=purple, taillabel="HDMI", headlabel="HDMI"];
-    hdmi_splitter     -> capture_board      [color=purple, taillabel="HDMI", headlabel="HDMI"];
-    capture_board     -> pc_windows         [color=blue, taillabel="USB", headlabel="USB"];
-
-    mouse             -> pc_windows         [color=blue, headlabel="USB", label="2.4 GHz", style="dashed"];
-    keyboard          -> pc_windows         [color=blue, headlabel="USB"];
-    mic               -> webcasting_mixer   [color=red, taillabel="XLR", headlabel="AUX (φ3.5)"];
-    cam               -> pc_windows         [color=blue, headlabel="USB"];
-
-    pc_windows        -> monitor_4k         [color=purple, taillabel="DP", headlabel="DP"];
-    pc_mbp            -> monitor_4k         [color=purple, taillabel="USB (Type-C)", headlabel="HDMI"];
-    pc_windows        -> webcasting_mixer   [color=blue, taillabel="USB", headlabel="USB (Type-B)"]
-
-    webcasting_mixer  -> headset            [color=red, taillabel="AUX (φ3.5)", headlabel="AUX (φ3.5)", label="無線にしたい！"];
-    webcasting_mixer  -> active_speaker     [color=red, taillabel="AUX (φ6.35)"];
-
-    capture_board     -> webcasting_mixer   [color=red, taillabel="AUX (φ3.5)", headlabel="AUX (φ3.5)"];
+    
+    nintendo_switch -> hdmi_splitter [color = purple; taillabel = "HDMI"; headlabel = "HDMI";];
+    hdmi_splitter -> monitor_gigacrysta [color = purple; taillabel = "HDMI"; headlabel = "HDMI";];
+    hdmi_splitter -> capture_board [color = purple; taillabel = "HDMI"; headlabel = "HDMI";];
+    capture_board -> pc_windows [color = blue; taillabel = "USB"; headlabel = "USB";];
+    
+    mouse -> usb_hub [color = blue; headlabel = "USB"; label = "2.4 GHz"; style = "dashed";];
+    keyboard -> usb_hub [color = blue; headlabel = "USB";];
+    mic -> webcasting_mixer [color = red; taillabel = "XLR"; headlabel = "1 Ch";];
+    cam -> pc_windows [color = blue; headlabel = "USB";];
+    usb_hub -> pc_windows [color = blue; headlabel = "USB";];
+    pc_mbp -> webcasting_mixer [color = red; taillabel = "3.5 mm"; headlabel = "5/6 Ch";];
+    
+    pc_windows -> monitor_4k [color = purple; taillabel = "DP"; headlabel = "DP";];
+    pc_mbp -> monitor_4k [color = purple; taillabel = "USB (Type-C)"; headlabel = "HDMI";];
+    pc_windows -> webcasting_mixer [color = blue; taillabel = "USB"; headlabel = "USB (Type-C)"; dir = both;];
+    
+    webcasting_mixer -> headset [color = red; taillabel = "3.5 mm"; headlabel = "AUX (3.5 mm)"; label = "無線にしたい！";];
+    webcasting_mixer -> active_speaker [color = red; taillabel = "6.35 mm";];
+    
+    capture_board -> webcasting_mixer [color = red; taillabel = "3.5 mm"; headlabel = "3/4 Ch";];
 }
